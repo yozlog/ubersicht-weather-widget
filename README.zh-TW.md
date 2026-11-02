@@ -15,6 +15,8 @@
 
 需要 macOS、Übersicht 與 Node.js。目前設定檔同步功能會呼叫 `/usr/local/bin/node`；若 Node.js 安裝在其他位置，請修改 `index.jsx` 中對應的執行路徑。
 
+解壓縮 `ubersicht-weather-widget.widget.zip`，將其中的 `ubersicht-weather-widget.widget` 資料夾放入 `~/Library/Application Support/Übersicht/widgets/`。
+
 1. 下載專案，並將資料夾命名為 `ubersicht-weather-widget`。
 2. 將整個資料夾放到 `~/Library/Application Support/Übersicht/widgets/`。
 3. 在 Übersicht 選單選擇 **Refresh All Widgets**，接著依下方步驟設定城市。
@@ -23,7 +25,8 @@
 
 ```sh
 mkdir -p "$HOME/Library/Application Support/Übersicht/widgets"
-git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/Application Support/Übersicht/widgets/ubersicht-weather-widget"
+curl -fL "https://raw.githubusercontent.com/yozlog/ubersicht-weather-widget/main/ubersicht-weather-widget.widget.zip" -o /tmp/ubersicht-weather-widget.widget.zip
+unzip /tmp/ubersicht-weather-widget.widget.zip -d "$HOME/Library/Application Support/Übersicht/widgets"
 ```
 
 完成後，在 Übersicht 選單選擇 **Refresh All Widgets**。
@@ -166,6 +169,8 @@ Location 頁面與天氣頁面共用同一個高度限制及捲動容器：已�
 ## 開發與測試
 
 執行 `node check.cjs`，使用 Übersicht 隨附 Babel / React 驗證 JSX 與資料狀態；不安裝套件。
+
+執行 `node build-archive.cjs` 可建立提交至[官方 widget 庫](https://tracesof.net/uebersicht-widgets/)用的 `ubersicht-weather-widget.widget.zip`。壓縮檔只包含執行檔案、manifest 與授權。
 
 ## 授權
 

@@ -15,6 +15,8 @@ No API key is required to check the weather.
 
 Requires macOS, Übersicht, and Node.js. Settings synchronization currently calls `/usr/local/bin/node`. If Node.js is installed elsewhere, update the executable path in `index.jsx`.
 
+Extract `ubersicht-weather-widget.widget.zip` and place the resulting `ubersicht-weather-widget.widget` folder in `~/Library/Application Support/Übersicht/widgets/`.
+
 1. Download the project and name its folder `ubersicht-weather-widget`.
 2. Place the entire folder in `~/Library/Application Support/Übersicht/widgets/`.
 3. Select **Refresh All Widgets** in the Übersicht menu, then follow the steps below to add a city.
@@ -23,7 +25,8 @@ You can also install directly from Terminal:
 
 ```sh
 mkdir -p "$HOME/Library/Application Support/Übersicht/widgets"
-git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/Application Support/Übersicht/widgets/ubersicht-weather-widget"
+curl -fL "https://raw.githubusercontent.com/yozlog/ubersicht-weather-widget/main/ubersicht-weather-widget.widget.zip" -o /tmp/ubersicht-weather-widget.widget.zip
+unzip /tmp/ubersicht-weather-widget.widget.zip -d "$HOME/Library/Application Support/Übersicht/widgets"
 ```
 
 Then select **Refresh All Widgets** in the Übersicht menu.
@@ -166,6 +169,8 @@ You can override individual modes or fields. Missing, `null`, or invalid fields 
 ## Development and Testing
 
 Run `node check.cjs` to verify JSX and data states using Babel / React bundled with Übersicht. No packages are installed.
+
+Run `node build-archive.cjs` to build `ubersicht-weather-widget.widget.zip` for submission to the [official widget library](https://tracesof.net/uebersicht-widgets/). The archive includes only runtime files, the manifest, and the license.
 
 ## License
 

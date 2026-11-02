@@ -15,6 +15,8 @@ API 키를 설정하지 않아도 날씨를 확인할 수 있습니다.
 
 macOS, Übersicht, Node.js가 필요합니다. 설정 파일 동기화 기능은 현재 `/usr/local/bin/node`를 호출합니다. Node.js가 다른 경로에 설치되어 있다면 `index.jsx`의 실행 경로를 수정하세요.
 
+`ubersicht-weather-widget.widget.zip`의 압축을 풀고, 안에 있는 `ubersicht-weather-widget.widget` 폴더를 `~/Library/Application Support/Übersicht/widgets/`에 넣으세요.
+
 1. 프로젝트를 다운로드하고 폴더 이름을 `ubersicht-weather-widget`으로 설정하세요.
 2. 폴더 전체를 `~/Library/Application Support/Übersicht/widgets/`에 넣으세요.
 3. Übersicht 메뉴에서 **Refresh All Widgets**를 선택한 뒤 아래 방법으로 도시를 추가하세요.
@@ -23,7 +25,8 @@ macOS, Übersicht, Node.js가 필요합니다. 설정 파일 동기화 기능은
 
 ```sh
 mkdir -p "$HOME/Library/Application Support/Übersicht/widgets"
-git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/Application Support/Übersicht/widgets/ubersicht-weather-widget"
+curl -fL "https://raw.githubusercontent.com/yozlog/ubersicht-weather-widget/main/ubersicht-weather-widget.widget.zip" -o /tmp/ubersicht-weather-widget.widget.zip
+unzip /tmp/ubersicht-weather-widget.widget.zip -d "$HOME/Library/Application Support/Übersicht/widgets"
 ```
 
 설치 후 Übersicht 메뉴에서 **Refresh All Widgets**를 선택하세요.
@@ -166,6 +169,8 @@ git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/
 ## 개발 및 테스트
 
 `node check.cjs`를 실행하면 Übersicht에 포함된 Babel / React로 JSX와 데이터 상태를 검증합니다. 별도 패키지는 설치하지 않습니다.
+
+`node build-archive.cjs`를 실행하면 [공식 위젯 라이브러리](https://tracesof.net/uebersicht-widgets/) 제출용 `ubersicht-weather-widget.widget.zip`을 생성합니다. 압축 파일에는 실행에 필요한 파일, 매니페스트, 라이선스만 포함됩니다.
 
 ## 라이선스
 
