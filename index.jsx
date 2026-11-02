@@ -79,7 +79,9 @@ export const className = `
   a { color: inherit; text-decoration: none; }
   button, input, select { font: inherit; color: inherit; border: 1px solid rgba(var(--fg), .3); border-radius: 6px; background: rgba(var(--fg), .05); padding: 6px 8px; }
   .forecast-settings { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 8px; }
-  select { color-scheme: light dark; }
+  .forecast-select { position: relative; display: inline-block; }
+  .forecast-select::after { content: ""; position: absolute; right: 10px; top: calc(50% - 4px); width: 5px; height: 5px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); pointer-events: none; }
+  select { -webkit-appearance: none; appearance: none; color-scheme: light dark; background-image: none; box-shadow: none; padding-right: 28px; cursor: pointer; }
   button { cursor: pointer; text-shadow: none; }
   button:hover { border-color: rgb(var(--fg)); color: rgb(var(--fg)); }
   button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid rgb(var(--fg)); outline-offset: 3px; }
@@ -428,9 +430,11 @@ export const render = (state, dispatch) => {
           <span className="muted">Rain chance today</span><span style={{ color: 'rgb(var(--fg))' }}>{number(daily.precipitation_probability_max[0], '%')}</span>
         </div>
         <label className="forecast-settings">Forecast
-          <select aria-label="Forecast days" value={state.days} onChange={event => selectDays(Number(event.target.value), dispatch)}>
-            {Array.from({ length: maxForecastDays }, (_, i) => i + 1).map(days => <option key={days} value={days}>{days} {days === 1 ? 'day' : 'days'}</option>)}
-          </select>
+          <span className="forecast-select">
+            <select aria-label="Forecast days" value={state.days} onChange={event => selectDays(Number(event.target.value), dispatch)}>
+              {Array.from({ length: maxForecastDays }, (_, i) => i + 1).map(days => <option key={days} value={days}>{days} {days === 1 ? 'day' : 'days'}</option>)}
+            </select>
+          </span>
         </label>
         {daily.time.slice(0, state.days).map((date, i) => <button className="forecast" key={date} aria-label={`Hourly forecast for ${date}`} onClick={event => {
           if (event) event.currentTarget.closest('section').parentElement.scrollTop = 0;
