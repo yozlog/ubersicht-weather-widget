@@ -1,0 +1,11 @@
+# Temporary settings files
+/config.json.*.tmp
+
+# macOS and editor files
+.DS_Store
+*.swp
+*~
+
+# Local dependencies and logs
+node_modules/
+*.log

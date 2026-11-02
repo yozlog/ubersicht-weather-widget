@@ -1,0 +1,23 @@
+{
+  "cities": [],
+  "location": null,
+  "forecastDays": 7,
+  "top": 44,
+  "left": 20,
+  "width": 288,
+  "maxHeight": null,
+  "minHeight": null,
+  "weatherDisplay": "both",
+  "colors": {
+    "light": {
+      "background": "#ffffff",
+      "foreground": "#000000",
+      "backgroundOpacity": 0.25
+    },
+    "dark": {
+      "background": "#000000",
+      "foreground": "#ffffff",
+      "backgroundOpacity": 0.2
+    }
+  }
+}
