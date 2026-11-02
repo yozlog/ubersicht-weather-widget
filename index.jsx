@@ -41,14 +41,17 @@ export const className = `
     --fg: ${dark.foreground}; --bg: ${dark.background}; --bg-opacity: ${dark.opacity};
   }
   background: rgba(var(--bg), var(--bg-opacity)); color: rgb(var(--fg));
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-  &:hover, &:focus-within { scrollbar-color: rgba(var(--fg), .4) transparent; }
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background: transparent; border-radius: 3px; }
-  &:hover::-webkit-scrollbar-thumb, &:focus-within::-webkit-scrollbar-thumb { background: rgba(var(--fg), .4); }
+  /* Changing an inherited variable forces WebKit to repaint scrollbar hover states. */
+  --weather-scrollbar-thumb: transparent;
+  scrollbar-width: auto;
+  scrollbar-color: auto;
+  &:hover { --weather-scrollbar-thumb: rgba(var(--fg), .4); }
+  &::-webkit-scrollbar { width: 6px; background: transparent; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--weather-scrollbar-thumb); border-radius: 3px; }
   font: 12px/1.6 "Input Mono", "Fira Code", Menlo, monospace;
   * { box-sizing: border-box; }
+  section:focus { outline: none; }
   header, .current, .forecast { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   h1 { margin: 0; font-size: 14px; font-weight: 500; overflow-wrap: anywhere; }
   .eyebrow { color: rgb(var(--fg)); font-size: 10px; letter-spacing: 2px; }
@@ -386,7 +389,9 @@ export const render = (state, dispatch) => {
   // API timestamps are already in the selected city's local time, including DST.
   const hours = hourly && Array.isArray(hourly.time) ? hourly.time.map((time, i) => ({ time, i })).filter(hour => hour.time.slice(0, 10) === state.selectedDate) : [];
   return (
-    <section aria-label="Weather" tabIndex={maxHeight === null ? undefined : 0}>
+    <section aria-label="Weather" tabIndex={maxHeight === null ? undefined : 0}
+      onMouseLeave={event => { if (event.currentTarget.matches(':focus')) event.currentTarget.blur(); }}
+      onKeyDown={event => { if (event.key === 'Escape' && event.target === event.currentTarget) event.currentTarget.blur(); }}>
       <header>
         <div><div className="eyebrow">WEATHER</div><h1>{location ? location.name : 'Set your location'}</h1></div>
         {location && <div className="city-controls">

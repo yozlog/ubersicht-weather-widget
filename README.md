@@ -102,7 +102,7 @@ Set `maxHeight` and `minHeight` in `config.json`, also in pixels. The included d
 
 Both height settings default to `null`. Missing, nonnumeric, or nonpositive values also mean no limit. Height follows the content: a two-day forecast stays short rather than filling the maximum height. Content scrolls only when it exceeds `maxHeight`. A configured `minHeight` reserves that much height even with less content. Heights include padding; if the minimum exceeds the maximum, the maximum takes priority.
 
-To limit height, set `maxHeight` to the desired pixel value. Enable Übersicht interaction, move the pointer over the widget, and scroll with a mouse wheel or trackpad. You can also focus the content and use arrow keys. The scrollbar appears only while hovering or when content has keyboard focus.
+To limit height, set `maxHeight` to the desired pixel value. Enable Übersicht interaction, move the pointer over the widget, and scroll with a mouse wheel or trackpad. You can also focus the content and use arrow keys. The scrollbar appears only while hovering and hides when the pointer leaves.
 
 **Location** and weather views share the same height limits and scroll container. Long saved-city lists or search results scroll beyond `maxHeight` and respect `minHeight`. No separate list height is needed. When `maxHeight` is `null`, neither view has a height limit.
 

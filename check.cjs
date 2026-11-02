@@ -76,6 +76,17 @@ for (const [configured, maximum, minimum] of [
   assert.ok(configuredWidget.className.includes(`overflow-y: ${maximum === null ? 'visible' : 'auto'};`));
   const section = configuredWidget.render(configuredWidget.initialState, () => {});
   assert.equal(section.props.tabIndex, maximum === null ? undefined : 0);
+  let blurred = 0;
+  const focusedContent = { matches: selector => selector === ':focus', blur: () => { blurred++; } };
+  section.props.onMouseLeave({ currentTarget: focusedContent });
+  assert.equal(blurred, 1);
+  section.props.onKeyDown({ key: 'ArrowDown', currentTarget: focusedContent, target: focusedContent });
+  assert.equal(blurred, 1);
+  section.props.onKeyDown({ key: 'Escape', currentTarget: focusedContent, target: focusedContent });
+  assert.equal(blurred, 2);
+  section.props.onKeyDown({ key: 'Escape', currentTarget: focusedContent, target: {} });
+  assert.equal(blurred, 2);
+  section.props.onMouseLeave({ currentTarget: { matches: () => false, blur: () => { throw new Error('Input focus must be preserved'); } } });
   const manyCities = Array.from({ length: 40 }, (_, i) => ({ name: `City ${i + 1}`, latitude: i, longitude: i }));
   const locationSection = configuredWidget.render({ ...configuredWidget.initialState, editing: true, location: manyCities[0], cities: manyCities }, () => {});
   const locationHTML = renderToStaticMarkup(locationSection);

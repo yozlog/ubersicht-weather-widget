@@ -102,7 +102,7 @@ git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/
 
 兩個高度設定皆預設 `null`；省略、非數字或非正數也視為未限制。高度跟隨內容自然調整，例如只顯示兩日預報時會縮短，不會撐滿最大高度。超過 `maxHeight` 才可捲動；設定 `minHeight` 後，內容不足時會保留指定的最小高度。高度包含內距；若最小高度大於最大高度，以最大高度為準。
 
-若要限制高度，可將 `maxHeight` 設為需要的像素值。請先啟用 Übersicht 互動功能，將游標移入 widget 後使用滾輪／觸控板捲動，也可聚焦內容後使用方向鍵。捲動條僅在滑鼠移入或鍵盤聚焦時顯示。
+若要限制高度，可將 `maxHeight` 設為需要的像素值。請先啟用 Übersicht 互動功能，將游標移入 widget 後使用滾輪／觸控板捲動，也可聚焦內容後使用方向鍵。捲動條僅在滑鼠移入時顯示，移開後隱藏。
 
 Location 頁面與天氣頁面共用同一個高度限制及捲動容器：已儲存城市或搜尋結果過多時，一樣在超過 `maxHeight` 後捲動，並遵守 `minHeight`。不需要另外設定城市清單高度。`maxHeight` 為 `null` 時，兩個頁面都不限制高度。
 
