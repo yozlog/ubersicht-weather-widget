@@ -4,6 +4,8 @@
 
 A highly customizable weather widget for [Übersicht](https://tracesof.net/uebersicht/) on macOS, with multiple cities and daily and hourly forecasts.
 
+<img src="screenshot-main.jpg" alt="Main weather view" width="344">
+
 No API key is required to check the weather.
 
 - Weather data is provided by [Open-Meteo](https://open-meteo.com/).
@@ -32,8 +34,18 @@ Enable interaction in Übersicht first.
 
 - **Location**: Manage cities. **→**: Switch cities.
 - Hold and drag **☰** to reorder cities.
+
+<img src="screenshot-locations.jpg" alt="Saved cities and location search" width="344">
+
 - **Forecast**: Choose 1–16 forecast days.
-- Select a daily forecast to view its hourly forecast.
+
+<img src="screenshot-forecast-days.jpg" alt="Forecast day selection" width="344">
+
+### Hourly Forecast
+
+Select a daily forecast to view its hourly forecast.
+
+<img src="screenshot-hourly.jpg" alt="Hourly forecast" width="344">
 
 ## Data Updates
 

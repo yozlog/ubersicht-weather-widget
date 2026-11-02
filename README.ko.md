@@ -4,6 +4,8 @@
 
 macOS [Übersicht](https://tracesof.net/uebersicht/)용 날씨 위젯으로, 자유로운 외관 설정과 여러 도시의 일별·시간별 예보를 지원합니다.
 
+<img src="screenshot-main.jpg" alt="날씨 메인 화면" width="344">
+
 API 키를 설정하지 않아도 날씨를 확인할 수 있습니다.
 
 - 날씨 데이터는 [Open-Meteo](https://open-meteo.com/)에서 제공합니다.
@@ -32,8 +34,18 @@ git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/
 
 - **Location**: 도시 관리. **→**: 도시 전환.
 - **☰**를 길게 누른 채 드래그하면 도시 순서를 바꿀 수 있습니다.
+
+<img src="screenshot-locations.jpg" alt="저장된 도시 및 지역 검색" width="344">
+
 - **Forecast**: 1~16일 예보를 선택합니다.
-- 일별 예보를 누르면 해당 날짜의 시간별 예보를 볼 수 있습니다.
+
+<img src="screenshot-forecast-days.jpg" alt="예보 일수 선택" width="344">
+
+### 시간별 예보
+
+일별 예보를 누르면 해당 날짜의 시간별 예보를 볼 수 있습니다.
+
+<img src="screenshot-hourly.jpg" alt="시간별 날씨 예보" width="344">
 
 ## 데이터 갱신
 

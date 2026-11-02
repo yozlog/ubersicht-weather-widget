@@ -4,6 +4,8 @@
 
 適用於 macOS [Übersicht](https://tracesof.net/uebersicht/) 的高度可自訂天氣 widget，支援多城市、每日與逐小時預報。
 
+<img src="screenshot-main.jpg" alt="天氣主畫面" width="344">
+
 無需設定 API key，即可查詢天氣。
 
 - 天氣資料由 [Open-Meteo](https://open-meteo.com/) 提供。
@@ -32,8 +34,18 @@ git clone https://github.com/yozlog/ubersicht-weather-widget.git "$HOME/Library/
 
 - **Location**：管理城市；**→**：切換城市。
 - 長按 **☰** 並拖曳可調整城市順序。
+
+<img src="screenshot-locations.jpg" alt="已儲存城市與地區搜尋" width="344">
+
 - **Forecast**：選擇 1–16 日預報。
-- 點擊每日預報查看該日分時預報。
+
+<img src="screenshot-forecast-days.jpg" alt="預報天數選擇" width="344">
+
+### 分時預報
+
+點擊每日預報查看該日分時預報。
+
+<img src="screenshot-hourly.jpg" alt="逐小時天氣預報" width="344">
 
 ## 資料更新
 
