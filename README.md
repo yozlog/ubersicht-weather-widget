@@ -13,7 +13,7 @@ No API key is required to check the weather.
 
 ## Installation
 
-Requires macOS, Übersicht, and Node.js. Settings synchronization currently calls `/usr/local/bin/node`. If Node.js is installed elsewhere, update the executable path in `index.jsx`.
+Requires macOS, Übersicht, and Node.js. Settings synchronization uses Node.js from `PATH`, with `/opt/homebrew/bin` (Apple Silicon Homebrew) and `/usr/local/bin` (Intel Homebrew) as fallbacks.
 
 Extract `ubersicht-weather-widget.widget.zip` and place the resulting `ubersicht-weather-widget.widget` folder in `~/Library/Application Support/Übersicht/widgets/`.
 

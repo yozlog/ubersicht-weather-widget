@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
+const { execFileSync } = require('node:child_process');
 const deps = '/Applications/Übersicht.app/Contents/Resources/node_modules/';
 const babel = require(deps + '@babel/core');
 const React = require(deps + 'react');
@@ -310,12 +311,13 @@ second.exports.command(event => events.push(event)).then(async () => {
   const cityC = { name: 'Tokyo', latitude: 35.68, longitude: 139.69 };
   let held;
   const writes = [];
+  const commands = [];
   const fileConfig = { width: 344, maxHeight: 525, cities: [cityA, cityB, cityC], location: cityA, forecastDays: 2 };
   const dragContext = { ...cityContext, exports: {},
     setTimeout: (fn, delay) => { if (delay === 300) { held = fn; return 'hold'; } return setTimeout(fn, delay); },
     clearTimeout: id => { if (id === 'hold') held = null; else clearTimeout(id); },
     require: name => name === 'uebersicht' ? { run: async command => {
-      assert.ok(command.startsWith('/usr/local/bin/node ubersicht-weather-widget/save-config.cjs '));
+      commands.push(command);
       const match = command.match(/'([0-9a-f]+)'$/);
       assert.ok(match);
       const patch = JSON.parse(Buffer.from(match[1], 'hex').toString('utf8'));
@@ -347,6 +349,34 @@ second.exports.command(event => events.push(event)).then(async () => {
   dragButton().props.onPointerUp(pointer);
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(writes.length, 1);
+  // Exercise the real save command with isolated PATH and Homebrew installations.
+  const nodePaths = fs.mkdtempSync(require('node:path').join(require('node:os').tmpdir(), 'weather-node-paths-'));
+  try {
+    const path = require('node:path');
+    const custom = path.join(nodePaths, 'custom node');
+    const arm = path.join(nodePaths, 'opt', 'homebrew', 'bin');
+    const intel = path.join(nodePaths, 'usr', 'local', 'bin');
+    const widget = path.join(nodePaths, 'ubersicht-weather-widget');
+    for (const directory of [custom, arm, intel, widget]) fs.mkdirSync(directory, { recursive: true });
+    fs.copyFileSync(path.join(__dirname, 'save-config.cjs'), path.join(widget, 'save-config.cjs'));
+    const configFile = path.join(widget, 'config.json');
+    fs.writeFileSync(configFile, JSON.stringify({ width: 288, cities: [] }));
+    const marker = path.join(nodePaths, 'selected-node');
+    for (const [directory, label] of [[custom, 'PATH'], [arm, 'Apple Silicon'], [intel, 'Intel']]) {
+      fs.writeFileSync(path.join(directory, 'node'), `#!/bin/sh\nprintf '%s' '${label}' > "$WEATHER_NODE_CAPTURE"\nexec '${process.execPath.replace(/'/g, "'\\''")}' "$@"\n`, { mode: 0o700 });
+    }
+    const command = commands[0].replaceAll('/opt/homebrew/bin', arm).replaceAll('/usr/local/bin', intel);
+    for (const [searchPath, expected] of [[custom, 'PATH'], ['/usr/bin:/bin', 'Apple Silicon'], ['/usr/bin:/bin', 'Intel']]) {
+      execFileSync('/bin/sh', ['-c', command], { cwd: nodePaths, env: { ...process.env, PATH: searchPath, WEATHER_NODE_CAPTURE: marker }, stdio: 'pipe' });
+      assert.equal(fs.readFileSync(marker, 'utf8'), expected);
+      assert.equal(JSON.parse(fs.readFileSync(configFile, 'utf8')).cities.length, 3);
+      if (expected === 'Apple Silicon') fs.unlinkSync(path.join(arm, 'node'));
+    }
+    fs.unlinkSync(path.join(intel, 'node'));
+    const beforeMissingNode = fs.readFileSync(configFile, 'utf8');
+    assert.throws(() => execFileSync('/bin/sh', ['-c', command], { cwd: nodePaths, env: { ...process.env, PATH: '/usr/bin:/bin' }, stdio: 'pipe' }));
+    assert.equal(fs.readFileSync(configFile, 'utf8'), beforeMissingNode);
+  } finally { fs.rmSync(nodePaths, { recursive: true, force: true }); }
   assert.equal(fileConfig.cities[2].name, 'Seoul');
   assert.equal(dragState.location.name, 'Seoul');
   assert.equal(dragState.data, data);

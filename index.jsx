@@ -111,7 +111,7 @@ let saveQueue = Promise.resolve();
 function persistConfig(patch, dispatch) {
   // Only hexadecimal bytes enter the shell command; city names remain JSON data.
   const encoded = Array.from(new TextEncoder().encode(JSON.stringify(patch)), byte => byte.toString(16).padStart(2, '0')).join('');
-  saveQueue = saveQueue.catch(() => {}).then(() => run(`/usr/local/bin/node ubersicht-weather-widget/save-config.cjs '${encoded}'`));
+  saveQueue = saveQueue.catch(() => {}).then(() => run(`PATH="$PATH:/opt/homebrew/bin:/usr/local/bin" node ubersicht-weather-widget/save-config.cjs '${encoded}'`));
   return saveQueue.then(() => dispatch({ type: 'configSaved' }), () => dispatch({ type: 'configFailed' }));
 }
 

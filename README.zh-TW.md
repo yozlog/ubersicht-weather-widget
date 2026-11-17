@@ -13,7 +13,7 @@
 
 ## 安裝
 
-需要 macOS、Übersicht 與 Node.js。目前設定檔同步功能會呼叫 `/usr/local/bin/node`；若 Node.js 安裝在其他位置，請修改 `index.jsx` 中對應的執行路徑。
+需要 macOS、Übersicht 與 Node.js。設定檔同步優先使用 `PATH` 中的 Node.js，並支援 `/opt/homebrew/bin`（Apple Silicon Homebrew）與 `/usr/local/bin`（Intel Homebrew）作為備用搜尋路徑。
 
 解壓縮 `ubersicht-weather-widget.widget.zip`，將其中的 `ubersicht-weather-widget.widget` 資料夾放入 `~/Library/Application Support/Übersicht/widgets/`。
 

@@ -13,7 +13,7 @@ API 키를 설정하지 않아도 날씨를 확인할 수 있습니다.
 
 ## 설치
 
-macOS, Übersicht, Node.js가 필요합니다. 설정 파일 동기화 기능은 현재 `/usr/local/bin/node`를 호출합니다. Node.js가 다른 경로에 설치되어 있다면 `index.jsx`의 실행 경로를 수정하세요.
+macOS, Übersicht, Node.js가 필요합니다. 설정 파일 동기화는 `PATH`의 Node.js를 우선 사용하며, `/opt/homebrew/bin`(Apple Silicon Homebrew)과 `/usr/local/bin`(Intel Homebrew)을 추가로 검색합니다.
 
 `ubersicht-weather-widget.widget.zip`의 압축을 풀고, 안에 있는 `ubersicht-weather-widget.widget` 폴더를 `~/Library/Application Support/Übersicht/widgets/`에 넣으세요.
 
